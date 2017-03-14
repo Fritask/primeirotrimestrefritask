@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour {
 	
 	IEnumerator GerarObstaculos() {
         while (GameController.instancia.estado == Estado.Jogando) {
-            Vector3 pos = new Vector3(7.5f, Random.Range(2f, 5f), 0f);
+            Vector3 pos = new Vector3(7.5f, Random.Range(2f, 6f), 0f);
             GameObject obj = Instantiate(obstaculo, pos, Quaternion.identity) as GameObject;
             Destroy(obj, tempoDestruicao);
             yield return new WaitForSeconds(espera);
