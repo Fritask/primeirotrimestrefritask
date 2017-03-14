@@ -1,28 +1,31 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GosmaMove : MonoBehaviour {
 
-    public float velocidadeh;
-    public float velocidadev;
+    public float velocidadeHorizontal;
+    public float velocidadeVertical;
     public float min;
     public float max;
     public float espera;
 
     void Start() {
-        StartCoroutine(Move(max));
+        StartCoroutine(Move(min));
+    }
+
+    void Update () {
+        Vector3 velocidadeVetorial = Vector3.left * velocidadeHorizontal;
+        transform.localPosition = transform.localPosition + velocidadeVetorial * Time.deltaTime;
     }
 
     IEnumerator Move(float destino) {
-        while (Mathf.Abs(destino - transform.position.y) > 0.2f) {
-            Vector3 direcaov = (destino == max) ? Vector3.up : Vector3.down;
-            Vector3 velocidadeVetorial = direcaov * velocidadev;
-            transform.position = transform.position + velocidadeVetorial * Time.deltaTime;
-
+        while (Mathf.Abs(destino - transform.localPosition.y) > 0.2f) {
+            Vector3 direcao = (destino == max) ? Vector3.up : Vector3.down;
+            Vector3 velocidadeVetorial = direcao * velocidadeVertical;
+            transform.localPosition = transform.localPosition + velocidadeVetorial * Time.deltaTime;
             yield return null;
-
         }
-
 
         yield return new WaitForSeconds(espera);
 
@@ -30,9 +33,4 @@ public class GosmaMove : MonoBehaviour {
         StartCoroutine(Move(destino));
     }
 
-    void Update() {
-
-        Vector3 direcaoh = Vector3.left * velocidadeh;
-        transform.position = transform.position + direcaoh * Time.deltaTime;
-    }
 }
